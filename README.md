@@ -1,4 +1,192 @@
 calc
 ====
 
-ç¼–è¯‘åŽŸç†å®žæˆ˜ä¹‹è¡¨è¾¾å¼è®¡ç®—å™¨
+±àÒëÔ­ÀíÊµÕ½Ö®±í´ïÊ½¼ÆËãÆ÷
+
+![calc](./calc.gif)
+
+---
+
+### Ç°ÑÔ
+ÕûÀíÓ²ÅÌÊ±·­³öÖ®Ç°Ð´µÄÒ»¸ö¼òµ¥µÄ±í´ïÊ½¼ÆËãÆ÷, ÏëÏëµ±³õÎªÁËÀí½âÕâ¶«Î÷Ò²·ÑÁË²»ÉÙ¹¦·ò, ËùÒÔÏëÐ´Ò»Æª±Ê¼Ç, Ï£ÍûÄÜ¸øµ±³õÏñÎÒÒ»ÑùµÄ²ËÄñÒ»µã°ïÖú. Ô­À´Ö»´òËãÐ´±í´ïÊ½½âÎö¼ÆËãµÄ·½·¨, Ð´ÁËÒ»°ëºó·¢ÏÖ¾Í¹â¿¿ÄÇµã¶«Î÷²»Ò»¶¨Ê¹ÈË¿´µÃ¶®´úÂë, ËùÒÔ¸É´à´ÓÍ·¿ªÊ¼Ð´ÆðÁË.
+
+¿¼ÂÇÓÐ±í´ïÊ½:
+
+12 + 34 - 5
+
+Ëü½«×öÎªÒ»¸ö×Ö·û´®ÊäÈë¼ÆËã»ú, ÎªÁË·½±ã´¦Àí, Òª¶ÔËüÏÈ×ö´Ê·¨·ÖÎö. 
+´Ê·¨·ÖÎö¹ý³Ì¾ÍÊÇ½«ÊäÈë×Ö·û´®·Ö½âÎªtoken(¼ÇºÅ)µÄ¹ý³Ì. tokenÊÇ×é³É´Ê·¨ÔªËØµÄ×îÐ¡µ¥Ôª, ¶ÔÓÚÉÏÃæµÄÄÇ¸ö±í´ïÊ½, Ëü½«»á±»´Ê·¨·ÖÎöÆ÷ÇÐ¸î³ÉÈçÏÂtoken:
+
++ '12'
++ '+'
++ '34'
++ '-'
++ '5'
+
+¶ÔÓÚÉÏÃæµÄ±í´ïÊ½, ¿Õ¸ñÖ»ÊÇÓÃÓÚÔöÇ¿¿É¶ÁÐÔ, ²¢²»¾ß±¸´Ê·¨»òÕßÓï·¨ÒâÒå, ËùÒÔ±»¶ªÆúµô. 
+
+### ´íÎó´¦Àí.
+
+ÓÐÒ»¾äÃûÑÔÕâÑùËµ, **ÓÀÔ¶²»ÒªÏàÐÅÓÃ»§µÄÊäÈë**. ¶ÔÓÚÒ»¸ö±í´ïÊ½¼ÆËãÆ÷, ÎÒÃÇ¿ÉÒÔÏÞ¶¨ÓÃ»§Ö»ÄÜÊäÈëÊý×ÖºÍÔËËã·û, µ«È´²»ÄÜ×èÖ¹ÓÃ»§ÊäÈë´íÎóµÄ±í´ïÊ½, ±ÈÈç 12 + - 34 , ËùÒÔ¶ÔÓÚÓÃ»§ÊäÈëµÄ±í´ïÊ½»¹ÒªÓÐÒ»¸öÓï·¨´¦ÀíµÄ¹ý³Ì. 
+
+Óï·¨¹æ¶¨ÁËtokenµÄÅÅÁÐ¹æÔò, ¶ÔÓÚ±í´ïÊ½¼ÆËãÆ÷, Ïñ 12+-34 ÕâÑùµÄ±í´ïÊ½ÊÇ²»ºÏ·¨µÄ, ÄÇÒªÔõÃ´ÑùÈ¥¼ì²âÒ»¸ö±í´ïÊ½ÊÇ·ñºÏ·¨ÄØ? 
+
+¼ÙÉè´Ë±í´ïÊ½¼ÆËãÆ÷Ö§³ÖËÄÔòÔËËãºÍÀ¨ºÅ, ÄÇÃ´ËüºÏ·¨±í´ïÊ½µÄµÚÒ»¸ötokenÒ»¶¨ÊÇÒ»¸öÊý×Ö»òÕß×óÀ¨ºÅ, Èç¹ûµÚÒ»¸ötokenÊÇÊý×ÖµÄ»°, ÄÇÃ´µÚ¶þ¸ötokenÒ»¶¨ÊÇÔËËã·û; ¶øÈç¹ûµÚÒ»¸ötokenÊÇ×óÀ¨ºÅµÄ»°, ÄÇÃ´µÚ¶þ¸ötokenÒ»¶¨ÊÇÊý×Ö. 
+
+ËùÒÔ, **µ±¶Áµ½Ò»¸ötokenµÄÊ±ºò, ÏÂÒ»¸ötokenµÄÀàÐÍÊÇ¿ÉÒÔÔ¤²âµÄ**. ±í´ïÊ½µÄÓï·¨²¢²»¸´ÔÓ, Òò´ËÔ¤²â·ÖÖ§²¢²»»áÌ«¶à. µ±¶ÁÈëµÄÏÂÒ»¸ötokenÓëËùÓÐµÄÔ¤²â·ÖÖ§¶¼²»Ïà·ûÊ±, Ö¤Ã÷ÊäÈë³öÏÖÁËÓï·¨´íÎó.
+
+´Ê·¨·ÖÎöÆ÷¶ÔÍâÌá¹©µÄ½Ó¿Ú:
+
+```c
+// ·µ»Øµ±Ç°tokenµÄÀàÐÍ.
+tokenizer_token();  
+
+// µ±Ç°tokenÊÇÊý×ÖÊ±, ´Ëº¯Êý½«ASCIIÐÎÊ½µÄÊý×Ö×ªÎªÊý×ÖÖµ.
+tokenizer_num();
+
+// ½«µ±Ç°tokenÓëÆÚÍû(Ô¤²â)µÄtoken×ö¶Ô±È, Èç¹ûµ±Ç°token²»ÊÇËùÒÔÆÚÍûµÄtoken, ÔòÖ¤Ã÷ÊäÈëÓÐÓï·¨´íÎó. 
+accept();
+
+```
+
+### ±í´ïÊ½ÇóÖµ
+
+¶Ô±í´ïÊ½ÇóÖµÊÇ´Ë¼ÆËãÆ÷µÄºËÐÄÄÚÈÝ, ¿¼ÂÇÈçÏÂ±í´ïÊ½:
+
+a + b * (c - d) / e
+
+ÔÚ´Ë±í´ïÊ½ÖÐÓÐ5¸öÒò×Ó, Éæ¼°¼Ó¼õ³Ë³ýËÄÖÖÔËËãºÍÁ½ÖÖÓÅÏÈ¼¶, ÁíÍâ»¹Ê¹ÓÃÁËÀ¨ºÅÌáÉýÁËÓÅÏÈ¼¶.
+
+¼ÆËã»ú´Ó×óµ½ÓÒÒÀ´Î¶ÁÈë±í´ïÊ½, µ«ÓÉÓÚÔÚ±í´ïÊ½ÖÐ´æÔÚ²»Í¬µÄÓÅÏÈ¼¶, ËùÒÔË³Ðò´¦ÀíÊÇ²»ÏÖÊµµÄ, Òò´ËÐèÒªÑ°ÕÒÒ»ÖÖ·½·¨½â¾ö´ËÃ¬¶Ü.
+
+Èç¹û±í´ïÊ½Ö»ÓÐÒ»ÖÖÓÅÏÈ¼¶, ÄÇÃ´ÎÊÌâ¾Í¿ÉÒÔ±»ºÜÇáËÉµÄ½â¾ö. µ«ºÜÃ÷ÏÔÏëÒªÊ¹µÃ±í´ïÊ½Ö»ÓÐÒ»ÖÖÓÅÏÈ¼¶Í¬Ñù²»ÏÖÊµ, µ«ÔÚÊýÑ§ÖÐÑ§¹ýµÄÒ»Ð©»¯¼ò¹«Ê½µÄÊÖ¶Î»òÐíÄÜ¸øÎÒÃÇÒ»Ð©Æô·¢. 
+
+ÉèÓÐÈçÏÂ±í´ïÊ½:
+
+a * b + c / d
+
+Ê¹µÃ M = a * b, N = c / d, ÄÇÕâ¸ö¾ßÓÐÁ½¸öÓÅÏÈ¼¶µÄ±í´ïÊ½¿ÉÒÔ±»»¯¼òÎªÖ»ÓÐÒ»¸öÓÅÏÈ¼¶µÄ±í´ïÊ½ M + N, ¶ø»¯¼òºóµÄÕâ¸ö±í´ïÊ½ÊÇºÜÈÝÒ×±»¼ÆËãµÄ, Î¨Ò»Òª×öµÄ¾ÍÊÇÔÚ¼ÆËã M+N Ê±±£Ö¤Òò×ÓM ºÍÒò×ÓN ¶¼ÒÑ¾­ÇóÖµÍê±Ï. 
+
+»ùÓÚ´ËÖÖË¼Ïë¿ÉÒÔ½«¸´ÔÓµÄ±í´ïÊ½°´ÓÅÏÈ¼¶·Ö²ã×éºÏÎª¼òµ¥µÄ±í´ïÊ½, ÓÉÓÚ×éºÏºóµÄ¼òµ¥±í´ïÊ½µÄÒò×ÓÒ²¿ÉÄÜÊÇÒ»¸ö±í´ïÊ½, ËùÒÔ¿É¶ÔÆäÊ¹ÓÃµÝ¹é´¦Àí, ´Ó¶øµÃµ½±í´ïÊ½µÄ½á¹û.
+
+```c
+
+/**
+ * \brief  È¡µÃµ±Ç°Òò×ÓµÄÖµ, Èôµ±Ç°Òò×Ó(ÀàËÆÉÏÊ½ÖÐµÄM)ÊÇÒ»¸ö±í´ïÊ½, ½øÐÐµÝ¹éÇóÖµ
+ */
+int factor(void)
+{
+    int r;
+
+    // µ±Ç°tokenµÄÀàÐÍ
+    switch (tokenizer_token())
+    {
+    // Êý×Ö(ÖÕ½á·û)
+    case TOKENIZER_NUMBER:
+        // ½«ÆäÓÉASCII×ªÎªÊý×ÖÖµ
+        r = tokenizer_num();
+        // ¸ù¾ÝÓï·¨¹æÔòÆ¥Åäµ±Ç°token
+        accept(TOKENIZER_NUMBER);
+        break;
+    // ×óÀ¨ºÅ
+    case TOKENIZER_LPAREN:
+        accept(TOKENIZER_LPAREN);
+        // ½«À¨ºÅÀïµÄÖµµ±×÷Ò»¸öÐÂµÄ±í´ïÊ½, µÝ¹é¼ÆËã(µÝ¹éÊÇ´Óº¯Êýexpr()¿ªÊ¼µÄ)
+        r = expr();
+        // µ±À¨ºÅÀïµÄ±í´ïÊ½´¦ÀíÍê±ÏºóÏÂÒ»¸ötokenÒ»¶¨ÊÇÓÒÀ¨ºÅ
+        accept(TOKENIZER_RPAREN);
+        break;
+        // ³ý×óÀ¨ºÅºÍÊý×ÖÖ®ÍâµÄÆäËütokenÒÑ¾­±»ÉÏÒ»¼¶´¦ÀíµôÁË
+        // ÈôÓÐÆätoken, Ò»¶¨ÊÇ±í´ïÊ½Óï·¨´íÎó
+    default:
+        error();
+    }
+
+    // ·µ»ØÒò×ÓµÄÖµ
+    return r;
+}
+
+
+/**
+ * \brief  ÇóµÚ¶þ¼¶ÓÅÏÈ¼¶(³Ë³ý)±í´ïÊ½µÄÖµ
+ */
+int term(void)
+{
+    int f1, f2;
+    token_t op;
+
+    // »ñÈ¡×ó²Ù×÷Êý(Òò×Ó)
+    f1 = factor();
+    // »ñÈ¡²Ù×÷·û
+    op = tokenizer_token();
+
+    // ²Ù×÷·ûÖ»ÄÜÊÇ³Ë»òÕß³ý(Í¬Ò»ÓÅÏÈ¼¶)
+    while (op == TOKENIZER_ASTR || op == TOKENIZER_SLASH)
+    {
+        // ÏÂÒ»¸ötoken
+        tokenizer_next();
+        // »ñÈ¡ÓÒ²Ù×÷Êý(Òò×Ó)
+        f2 = factor();
+        switch (op)
+        {
+        case TOKENIZER_ASTR:
+            f1 = f1 * f2;
+            break;
+        case TOKENIZER_SLASH:
+            f1 = f1 / f2;
+            break;
+        }
+        // ÉÏÃæ¼ÆËãÍê±ÏµÄÕâ¸öÖµ½«×öÎª×ó²Ù×÷Êý
+        op = tokenizer_token();
+    }
+
+    return f1;
+}
+
+/**
+ * \brief  ÇóµÚÒ»¼¶ÓÅÏÈ¼¶(¼Ó¼õ)±í´ïÊ½µÄÖµ
+ */
+int expr(void)
+{
+    int t1, t2 = 0;
+    token_t op;
+
+    // µÚÒ»¸ö²Ù×÷Êý
+    t1 = term();
+    // »ñÈ¡ÔËËã·û
+    op = tokenizer_token();
+
+    // ²Ù×÷·ûÖ»ÄÜÊÇ¼Ó»òÕß¼õ(Í¬Ò»ÓÅÏÈ¼¶)
+    while (op == TOKENIZER_PLUS || op == TOKENIZER_MINUS)
+    {
+        // ÏÂÒ»¸ötoken
+        tokenizer_next();
+        // µÚ¶þ¸ö²Ù×÷Êý
+        t2 = term();
+        switch (op)
+        {
+        case TOKENIZER_PLUS:
+            t1 = t1 + t2;
+            break;
+        case TOKENIZER_MINUS:
+            t1 = t1 - t2;
+            break;
+        }
+        op = tokenizer_token();
+    }
+
+    return t1;
+}
+
+```
+
+±í´ïÊ½´¦Àí´Óexpr()¿ªÊ¼, ËüÖ»´¦ÀíµÚÒ»¼¶ÓÅÏÈ¼¶(¼Ó¼õ)±í´ïÊ½µÄ¼ÆËã. 
+Ê×ÏÈËüÏÈÒªµÃµ½µÚÒ»¸öÒò×ÓµÄÖµ, ¶øµÚÒ»¸öÒò×Ó¿ÉÄÜÊÇÒ»¸ö±í´ïÊ½, ËùÒÔËüµ÷ÓÃ´¦ÀíµÚ¶þ¼¶ÓÅÏÈ¼¶(³Ë³ý)±í´ïÊ½µÄº¯Êýterm()ÊÔÍ¼µÃµ½´ËÖµ. 
+
+°´ÀíËµÔÚ´¦ÀíµÚ¶þ¼¶ÓÅÏÈ¼¶±í´ïÊ½µÄº¯ÊýÖÐÒ»¶¨¿ÉÒÔÖ±½ÓµÃµ½´ËÒò×ÓµÄÖµ, ÒòÎªÃ»ÓÐ¸ü¸ßµÄÓÅÏÈ¼¶²ã´ÎÁË, µ«ÊÇÒòÎªÀ¨ºÅÖÐµÄ±í´ïÊ½»á±»ÌáÉýµ½×î¸ßÓÅÏÈ¼¶, Ïàµ±ÓÚÓÖ¶àÁËÒ»¸öÓÅÏÈ¼¶, ËùÒÔ¼ì²âÀ¨ºÅµÄ´æÔÚÊÇ±ØÐëµÄ. Òò´ËÔÚº¯Êýterm()ÖÐ»¹Òª¶Ô´ËÒò×Ó½øÐÐ¼ì²é. Èç¹ûËüÊÇÒ»¸öÖµµÄ»°Ö±½Ó·µ»Ø¼´¿É, µ«Èç¹û¼ì²âµ½×óÀ¨ºÅµÄ»°, ÔòÀ¨ºÅÖÐµÄ²¿·Ö½«»á±»×öÎªÒ»¸öÐÂ±í´ïÊ½, ´Ó¶øµ÷ÓÃ expr() ½øÐÐµÝ¹é´¦Àí, Ö»ÊÇÕâ¸öµÝ¹é¿çÔ½ÁË¼¸¸öº¯Êý, È¦ÈÆµÄ±È½Ï´ó. 
+
+ÍêÕûµÄ´úÂë:
+
+Õâ¸ö±í´ïÊ½¼ÆËãÆ÷ËãÊÇ¶Ô±àÒëÔ­ÀíµÄÐ¡Êµ¼ù, ¼òµ¥µÄÉæ¼°ÁË´Ê·¨·ÖÎöºÍÓï·¨·ÖÎöµÄÒ»Ð¡²¿·ÖÄÚÈÝ. Êµ¼ÊÉÏÕâÐ©¶«Î÷ºÜÄÑ×öµ½²»Ê¹ÓÃÀàËÆ¹«Ê½ÍÆµ¼µÄÊÖ¶Î¶ø±»¼òµ¥¾«È·µÄ±í´ï, Èç¹û¶ÔÐËÈ¤µÄ»°¿ÉÒÔ²Î¿¼<<±àÒëÔ­Àí>>½øÐÐÉîÈëÏµÍ³µÄÑ§Ï°.  
+
+
