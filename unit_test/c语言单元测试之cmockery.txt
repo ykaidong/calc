@@ -1,0 +1,118 @@
+C单元测试框架之cmockery
+
+首先看断言. cmockery支持如下断言, 看名知意, 无需多言.
+
+assert_true(c);
+assert_false(c);
+assert_int_equal(a, b);
+assert_int_not_equal(a, b);
+assert_string_equal(a, b);
+assert_string_not_equal(a, b);
+assert_memory_equal(a, b, size);
+assert_memory_not_equal(a, b, size);
+assert_in_range(value, minimum, maximum);
+assert_not_in_range(value, minimum, maximum);
+assert_in_set(value, values, number_of_values);
+assert_not_in_set(value, values, number_of_values);
+
+mock()函数.
+
+此函数用于这样的场景: 模块所依赖的外部接口无法使用或者某些接口暂时还未实现时可用它来模拟此接口, 它的返回值由函数 will_return() 指定.
+
+以之前写的表达式计算器为例.
+
+在计算器源代码中有一个原型为 int get_input(char *buf) 的函数, 用来获取用户输入, 当要进行自动化的单元测试时肯定要采取某种方式模拟自动输入, 而这个输入要可以指定. 此时mock()就可以派上用场了.
+
+在get_input()这个函数中, 用于获取输入的接口是getch(), 为了能自动模拟用户输入, 需要将此接口替换掉. 在这里使用一个宏将 getch() 替换为 test_getch(), 然后在单元测试模块中实现 test_getch(), 以实现自动输入的目地. 
+
+test_getch()的实现:
+
+
+// 替换getch(), 模拟用户输入
+int test_getch(void)
+{
+    // 这个返回值是使用will_return()函数指定的
+    return (int)mock();
+}
+
+其中mock()的返回值是由will_return()指定的, mock()的默认返回值为 void * 类型, 将其转换为合适的目标类型即可.
+
+
+get_input()的单元测试函数:
+
+// 测试函数
+void test_get_input(void **state)
+{
+    // 模拟用户输入的字符串
+    char *user_input = "10   +9 - 8(\b  * (4 - 3)2\b/2   \r";
+    // 用户输入被处理之后得到的字符串
+    char *input = "10+9-8*(4-3)/2";
+    // 存储输入的缓存区
+    char input_buf[EXPR_LEN];
+
+    size_t i;
+    for (i = 0; i < strlen(user_input); i++)
+    {
+        // 当调用test_getch()时将依次返回此处写入的字符
+        // test_getch()在get_input()函数中被调用
+        will_return(test_getch, *(user_input + i));
+    }
+
+    // 测试, get_input()返回的是输入的有效字符数
+    assert_int_equal(get_input(input_buf), strlen(input));
+    // 测试, 得到的输入值是否符合期望
+    assert_string_equal(input_buf, input);
+
+    return;
+}
+
+
+其中 user_input 为模拟用户输入的字符流, input是经get_input()处理后应该得到的字符串. 
+test_getch()在get_input()中被调用, 在其被调用之前, 先使用will_return()将模拟输入的值存入队列, 当调用 test_getch()时将依次返回此处用will_return()写入队列的值.
+
+
+
+expect_*()
+
+ecpect_*()系列宏和check_expected()配合使用, 用于参数检查. 
+
+假设被测模块中有函数 foo() 如下:
+
+int foo(int i)
+{
+    bar(i);
+
+    return i;
+}
+
+其中bar()是被测模块外实现的函数. 
+
+在进行单元测试时, 为了测试能正常进行, 需要在单元测试模块中实现一个bar()的替代函数:
+
+void bar(int i)
+{
+    // 在这里进行参数检查
+    check_expected(i);
+    // code
+
+    return;
+}
+
+对foo()进行单元测试的代码:
+
+void test_foo(void **state)
+{
+    // bar()中的参数 i 值应该为10
+    expect_value(bar, i, 10);
+
+    assert_int_equal(foo(10), 10);
+
+    return;
+}
+
+
+
+unit_tests(func) 用来将测试函数添加入数组, 然后使用run_tests()来依次测试数组中的测试函数.
+
+unit_test_setup_teardown(test, setup, teardown)	功能同上, 不过多了初始化与卸载函数. 其中setup是在测试之前进行初始化的函数, teardown是测试完成之后进行清场的函数. 这两个函数均可为空.
+

@@ -40,6 +40,10 @@
 #include <ctype.h>
 #include <string.h>
 
+#ifdef UNIT_TESTING
+#include "..\unit_test\unit_test.h"
+#endif
+
 /* Private typedef -----------------------------------------------------------*/
 typedef enum {
     TOKENIZER_ERROR,        // Error
@@ -69,10 +73,10 @@ typedef enum {
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-char *curr_char = NULL;     // 表达式中当前分析到的字符
-char *next_char = NULL;     // 表达式中下一个字符
-token_t current_token = TOKENIZER_ERROR;
-int error_code = NO_ERROR;
+static char *curr_char = NULL;     // 表达式中当前分析到的字符
+static char *next_char = NULL;     // 表达式中下一个字符
+static token_t current_token = TOKENIZER_ERROR;
+static int error_code = NO_ERROR;
 
 /* Private function prototypes -----------------------------------------------*/
 int factor(void);
@@ -100,7 +104,8 @@ int get_input(char *buf)
         if (ch >= '(' && ch <= '9' && ch != ',' && ch != '.')
         {
             *buf = ch;
-            putchar(*buf);
+            // putchar(*buf);
+            printf("%c", *buf);
             buf++;
             i++;
         }
@@ -385,6 +390,8 @@ void tokenizer_init(char *expr)
 
     return;
 }
+
+
 
 
 int main(int argc, char *argv[])
