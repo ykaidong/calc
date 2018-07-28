@@ -64,8 +64,10 @@ typedef enum {
 
 // 按键
 #define KEY_BACKSPACE   8
-#define KEY_ENTER       13
-#define KEY_ESC         27
+#define KEY_DEL              127
+#define KEY_ENTER           13
+#define KEY_ESC                27
+#define KEY_EQUAL           61
 
 // 错误
 #define NO_ERROR        0
@@ -110,7 +112,7 @@ int get_input(char *buf)
             i++;
         }
         // 处理退格
-        else if (ch == KEY_BACKSPACE)
+        else if (ch == KEY_BACKSPACE || ch == KEY_DEL)
         {
             if (i != 0)
             {
@@ -122,8 +124,11 @@ int get_input(char *buf)
         else if (ch == KEY_ESC)
             exit(0);
         // 回车, 输入完毕
-        else if (ch == KEY_ENTER)
+        else if (ch == KEY_ENTER || ch == KEY_EQUAL)
+        {
+        	printf("=");
             break;
+        }
     }
     *buf = '\0';
 
@@ -402,11 +407,11 @@ int main(int argc, char *argv[])
 
     printf("DevLabs Calculator [Version 0.2]\n");
     printf("(C) Copyright 2013 - 2014 DevLabs\n");
-    printf("Press ENTER to calculate and press ESC to exit\n");
+    printf("Press ENTER or EQUAL  to calculate and press ESC to exit\n");
 
     while (1)
     {
-        printf("\n>> ");
+        printf("\n>>> ");
 
         i = get_input(e);
 
@@ -424,12 +429,12 @@ int main(int argc, char *argv[])
             if (error_code == SYTAX_ERROR)
                 printf("\nSyntax Error!\n");
 
-            error_code = 0;
+            error_code = NO_ERROR;
 
             continue;
         }
 
-        printf("\n   %d\n", r);
+        printf("%d", r);
     }
 
     return 0;
@@ -437,5 +442,4 @@ int main(int argc, char *argv[])
 
 
 /************* Copyright(C) 2013 - 2014 DevLabs **********END OF FILE**********/
-
 
