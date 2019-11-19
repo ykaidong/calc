@@ -2,14 +2,14 @@
  ******************************************************************************
  * @file    calc.c
  * @author  ykaidong (http://www.DevLabs.cn)
- * @version V0.1
+ * @version V0.2
  * @date    2014-12-22
  * @brief
  ******************************************************************************
  * Change Logs:
  * Date           Author       Notes
  * 2014-12-22     ykaidong     the first version
- *
+ * 2019-11-19     ykaidong     优化错误处理和其它一些东西
  ******************************************************************************
  * @attention
  *
@@ -57,6 +57,17 @@ typedef enum {
     TOKENIZER_RPAREN,       // )
 } token_t;
 
+//  错误代码
+typedef enum {
+    no_error = 0,           // no error
+    syntax_error,           // syntax error
+} error_t;
+
+// 错误代码与对应的消息
+typedef struct {
+    error_t error_code;
+    char *message;
+} error_table_t;
 
 /* Private define ------------------------------------------------------------*/
 #define EXPR_LEN        512 // 允许表达式长度
@@ -64,21 +75,23 @@ typedef enum {
 
 // 按键
 #define KEY_BACKSPACE   8
-#define KEY_DEL              127
-#define KEY_ENTER           13
-#define KEY_ESC                27
-#define KEY_EQUAL           61
-
-// 错误
-#define NO_ERROR        0
-#define SYTAX_ERROR     1
+#define KEY_DEL         127
+#define KEY_ENTER       13
+#define KEY_ESC         27
+#define KEY_EQUAL       61
 
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
 static char *curr_char = NULL;     // 表达式中当前分析到的字符
 static char *next_char = NULL;     // 表达式中下一个字符
 static token_t current_token = TOKENIZER_ERROR;
-static int error_code = NO_ERROR;
+static error_t error_code = no_error;
+
+// 错误表
+static const error_table_t error_table[] = {
+    {.error_code = no_error,            .message = "no error"},
+    {.error_code = syntax_error,        .message = "syntax error!"}
+};
 
 /* Private function prototypes -----------------------------------------------*/
 int factor(void);
@@ -125,10 +138,7 @@ int get_input(char *buf)
             exit(0);
         // 回车, 输入完毕
         else if (ch == KEY_ENTER || ch == KEY_EQUAL)
-        {
-        	printf("=");
             break;
-        }
     }
     *buf = '\0';
 
@@ -217,7 +227,7 @@ bool tokenizer_finished(void)
  *
  * \param  err 错误类型
  */
-void error(int err)
+void error(error_t err)
 {
     error_code = err;
 
@@ -267,7 +277,7 @@ int tokenizer_num(void)
 void accept(token_t token)
 {
     if (token != tokenizer_token())
-        error(1);
+        error(syntax_error);
 
     tokenizer_next();
 }
@@ -302,7 +312,7 @@ int factor(void)
         // 除左括号和数字之外的其它token已经被上一级处理掉了
         // 若有其token, 一定是表达式语法错误
     default:
-        error(SYTAX_ERROR);
+        error(syntax_error);
     }
 
     // 返回因子的值
@@ -415,26 +425,29 @@ int main(int argc, char *argv[])
 
         i = get_input(e);
 
+        // 如果未输入任何字符, 则不进入接下来的处理流程
+        if (i == 0)
+            continue;
+
         tokenizer_init(e);
 
         r = expr();
 
-        if (i == 0)
+        if (error_code != no_error)
         {
-            error(2);
-        }
+            // 查找错误代码并打印对应消息
+            for (int i = 0; i < sizeof(error_table); i++)
+            {
+                if (error_table[i].error_code == error_code)
+                    printf("\n%s\n", error_table[i].message);
+            }
 
-        if (error_code)
-        {
-            if (error_code == SYTAX_ERROR)
-                printf("\nSyntax Error!\n");
-
-            error_code = NO_ERROR;
+            error_code = no_error;
 
             continue;
         }
 
-        printf("%d", r);
+        printf("=%d", r);
     }
 
     return 0;
